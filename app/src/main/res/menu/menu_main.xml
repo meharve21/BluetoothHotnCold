@@ -6,4 +6,8 @@
           android:title="@string/action_About"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+    <item android:id="@+id/action_scan"
+          android:title="@string/action_scan"
+          android:orderInCategory="100"
+          app:showAsAction="ifRoom"/>
 </menu>
