@@ -4,10 +4,18 @@
       tools:context="com.example.hotncold.MainActivity">
     <item android:id="@+id/action_About"
           android:title="@string/action_About"
+          android:orderInCategory="5"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_results"
+          android:title="@string/action_results"
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <item android:id="@+id/action_scan"
           android:title="@string/action_scan"
-          android:orderInCategory="100"
-          app:showAsAction="ifRoom"/>
+          android:orderInCategory="10"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_disconnect"
+          android:title="@string/action_disconnect"
+          android:orderInCategory="75"
+          app:showAsAction="never"/>
 </menu>

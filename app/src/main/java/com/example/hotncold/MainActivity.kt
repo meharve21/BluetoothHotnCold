@@ -1,5 +1,7 @@
 package com.example.hotncold
 
+import android.graphics.Color
+import android.graphics.Color.rgb
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.support.v7.app.AlertDialog
+import android.widget.SeekBar
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -16,6 +19,11 @@ class MainActivity : AppCompatActivity() {
     var pings = 0
     var playersW =0
     var playersL = 0
+    var seekVal =0
+    var color1 = arrayListOf(0, 219, 255)
+    var color2 = arrayListOf(255, 0, 0)
+    //this array is for the merged one
+    var color3 = intArrayOf(0, 0, 0)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,18 +32,67 @@ class MainActivity : AppCompatActivity() {
 
 
         ping.setOnClickListener{
+            if (pings < 5){
             pings++
             pingCount.text = pings.toString()
-            if (pings > 5){
+            }else{
+                pingCount.text = "LOSER"
                 playersL++
                 Toast.makeText(applicationContext,
                     "You've lost " + playersL + " times", Toast.LENGTH_SHORT).show()
+                heatView.setBackgroundColor(Color.rgb(170,0,0))
+                smile.setImageResource(R.drawable.loser)
                 pings = 0
+
+            }
+            if(seekVal > 99){
+                heatView.setBackgroundColor(Color.rgb(105,190,40))
+                smile.setImageResource(R.drawable.trophy)
+            }
+
+        }
+
+        seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onStopTrackingTouch(seekBarBlue: SeekBar?) {
+            }
+
+            override fun onStartTrackingTouch(seekBarBlue: SeekBar?) {
+            }
+
+
+            override fun onProgressChanged(seekBarBlue: SeekBar, i: Int, b: Boolean) {
+                seekVal = i
+                mergeValues()
+                heatView.setBackgroundColor(Color.rgb(color3[0], color3[1], color3[2]))
+                if(seekVal < 25) {
+                    smile.setImageResource(R.drawable.smile3)
+                }else if (seekVal > 75){
+                    smile.setImageResource(R.drawable.smile1)
+                } else {
+                    smile.setImageResource(R.drawable.smile2)
+                }
+                pingCount.text = seekVal.toString()
 
 
             }
-        }
+
+        })
+
     }
+
+    fun mergeValues(){
+        //0,50,100
+        //50,150,200
+        val percent1 = (100 - seekVal)
+        val percent2 = seekVal
+        color3[0] = ((percent2 * color2[0]) + (percent1 * color1[0])) / 100
+        color3[1] = ((percent2 * color2[1]) + (percent1 * color1[1])) / 100
+        color3[2] = ((percent2 * color2[2]) + (percent1 * color1[2])) / 100
+        //For proof that the percents are right for color merging
+        //val coast= Toast.makeText(applicationContext, "$percent1 , $percent2", Toast.LENGTH_LONG)
+        // coast.show()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

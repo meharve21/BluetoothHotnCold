@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main"/>
+    <include layout="@layout/content_main" android:background="#504F4F"/>
 
 </android.support.design.widget.CoordinatorLayout>
