@@ -14,6 +14,7 @@ import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.io.File
+import java.io.PrintWriter
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -31,17 +32,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val filename = ".file.txt"
-        val filesDir = "."
-        val fin = File(filesDir, filename)
-        val sc = Scanner(fin)
-        var line:String
-        val fout = File(filesDir, filename)
-        val out = fout.printWriter()
-        var file = File(filename)
+        val fileName = "data.txt"
+        //val filesDir = "."
+        //val fin = File(filesDir, filename)
+        //val sc = Scanner(fin)
+        //var line:String
+        //val fout = File(filesDir, filename)
+        //val out = fout.printWriter()
+        var file = File(fileName)
         //file.createNewFile()
-       val isNewFileCreated :Boolean = file.createNewFile()
-        if (isNewFileCreated) {
+       //val isNewFileCreated :Boolean = file.createNewFile()
+      //  if (isNewFileCreated) {
 
 
             ping.setOnClickListener {
@@ -58,16 +59,33 @@ class MainActivity : AppCompatActivity() {
                     heatView.setBackgroundColor(Color.rgb(170, 0, 0))
                     smile.setImageResource(R.drawable.loser)
                     pings = 0
-                    out.println("loss" + playersL)
-                    out.close()
+                    //println("You've lost $playersL time(s)")
+                        // out.println("loss" + playersL)
+                   // out.close()
+                    var content = "You've lost $playersL time(s)"
+                   /* val writer = PrintWriter("data.txt")
+                    writer.append(content)
+                    writer.close()*/
+                    File("file.txt").printWriter().use { out ->
+                        out.println(content)
+                    }
 
                 }
                 if (seekVal > 99) {
                     heatView.setBackgroundColor(Color.rgb(105, 190, 40))
                     smile.setImageResource(R.drawable.trophy)
                     playersW++
-                    out.println("wins" + playersW)
-                    out.close()
+                    //out.println("wins" + playersW)
+                    //out.close()
+                    var content:String ="You've won $playersW times"
+                   // file.writeText("You've won $playersW time(s)")
+                    /*val writer = PrintWriter("data.txt")
+                    writer.append(content)
+                    writer.close()*/
+                    File("file.txt").printWriter().use { out ->
+                        out.println(content)
+                    }
+
                 }
 
             }
@@ -97,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
-        }
+
     }
 
     fun mergeValues(){
