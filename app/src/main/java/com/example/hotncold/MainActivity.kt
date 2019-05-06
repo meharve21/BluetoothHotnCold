@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val filename = "file.txt"
+        val filename = ".file.txt"
         val filesDir = "."
         val fin = File(filesDir, filename)
         val sc = Scanner(fin)
@@ -39,61 +39,65 @@ class MainActivity : AppCompatActivity() {
         val fout = File(filesDir, filename)
         val out = fout.printWriter()
         var file = File(filename)
-        val isNewFileCreated :Boolean = file.createNewFile()
+        //file.createNewFile()
+       val isNewFileCreated :Boolean = file.createNewFile()
+        if (isNewFileCreated) {
 
 
-        ping.setOnClickListener{
-            if (pings < 5){
-            pings++
-            pingCount.text = pings.toString()
-            }else{
-                pingCount.text = "LOSER"
-                playersL++
-                Toast.makeText(applicationContext,
-                    "You've lost " + playersL + " times", Toast.LENGTH_SHORT).show()
-                heatView.setBackgroundColor(Color.rgb(170,0,0))
-                smile.setImageResource(R.drawable.loser)
-                pings = 0
-                out.println("loss" + playersL)
-                out.close()
-
-            }
-            if(seekVal > 99){
-                heatView.setBackgroundColor(Color.rgb(105,190,40))
-                smile.setImageResource(R.drawable.trophy)
-                playersW++
-                out.println("wins" + playersW)
-                out.close()
-            }
-
-        }
-
-        seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-            override fun onStopTrackingTouch(seekBarBlue: SeekBar?) {
-            }
-
-            override fun onStartTrackingTouch(seekBarBlue: SeekBar?) {
-            }
-
-
-            override fun onProgressChanged(seekBarBlue: SeekBar, i: Int, b: Boolean) {
-                seekVal = i
-                mergeValues()
-                heatView.setBackgroundColor(Color.rgb(color3[0], color3[1], color3[2]))
-                if(seekVal < 25) {
-                    smile.setImageResource(R.drawable.smile3)
-                }else if (seekVal > 75){
-                    smile.setImageResource(R.drawable.smile1)
+            ping.setOnClickListener {
+                if (pings < 5) {
+                    pings++
+                    pingCount.text = pings.toString()
                 } else {
-                    smile.setImageResource(R.drawable.smile2)
-                }
-                pingCount.text = seekVal.toString()
+                    pingCount.text = "LOSER"
+                    playersL++
+                    Toast.makeText(
+                        applicationContext,
+                        "You've lost " + playersL + " times", Toast.LENGTH_SHORT
+                    ).show()
+                    heatView.setBackgroundColor(Color.rgb(170, 0, 0))
+                    smile.setImageResource(R.drawable.loser)
+                    pings = 0
+                    out.println("loss" + playersL)
+                    out.close()
 
+                }
+                if (seekVal > 99) {
+                    heatView.setBackgroundColor(Color.rgb(105, 190, 40))
+                    smile.setImageResource(R.drawable.trophy)
+                    playersW++
+                    out.println("wins" + playersW)
+                    out.close()
+                }
 
             }
 
-        })
+            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onStopTrackingTouch(seekBarBlue: SeekBar?) {
+                }
 
+                override fun onStartTrackingTouch(seekBarBlue: SeekBar?) {
+                }
+
+
+                override fun onProgressChanged(seekBarBlue: SeekBar, i: Int, b: Boolean) {
+                    seekVal = i
+                    mergeValues()
+                    heatView.setBackgroundColor(Color.rgb(color3[0], color3[1], color3[2]))
+                    if (seekVal < 25) {
+                        smile.setImageResource(R.drawable.smile3)
+                    } else if (seekVal > 75) {
+                        smile.setImageResource(R.drawable.smile1)
+                    } else {
+                        smile.setImageResource(R.drawable.smile2)
+                    }
+                    pingCount.text = seekVal.toString()
+
+
+                }
+
+            })
+        }
     }
 
     fun mergeValues(){
